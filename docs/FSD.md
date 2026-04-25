@@ -186,9 +186,9 @@ Mekanisme override LED diimplementasikan menggunakan **FreeRTOS Binary Semaphore
 
 | Properti | `volatile bool` (tidak digunakan) | Binary Semaphore (yang diimplementasikan) |
 |---|---|---|
-| Sinyal bisa hilang? | ❌ Rentan race condition | ✅ Tidak — state disimpan oleh FreeRTOS |
-| Thread-safe? | ❌ Tidak ada proteksi | ✅ Dikelola sepenuhnya oleh kernel FreeRTOS |
-| Aman dari callback? | ❌ Tidak aman | ✅ `xSemaphoreGive()` aman dipanggil dari callback |
+| Sinyal bisa hilang? |  Rentan race condition |  Tidak — state disimpan oleh FreeRTOS |
+| Thread-safe? |  Tidak ada proteksi |  Dikelola sepenuhnya oleh kernel FreeRTOS |
+| Aman dari callback? |  Tidak aman |  `xSemaphoreGive()` aman dipanggil dari callback |
 | Cara pengecekan | Pengecekan flag di while loop | `xSemaphoreTake(ledSem, 0)` — timeout 0, non-blocking |
 
 Timeout `0` pada `xSemaphoreTake(ledSem, 0)` berarti **langsung cek tanpa menunggu** — jika sinyal tersedia langsung diambil dan masuk mode override, jika tidak ada sinyal langsung lanjut ke blink normal. Ini memungkinkan `taskLED` terus berkedip normal di setiap iterasi sambil tetap responsif terhadap perintah override.
